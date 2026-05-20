@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Study: A Student Struggling to Calculate a Mean (Student Edition)</title>
+<meta name="description" content="A diagnostic case study for introductory community college math students. Investigate why a peer cannot calculate a mean and propose a corrective intervention. Student edition — no instructor notes.">
+<style>
+  :root {
+    /* Light theme palette - off-white background, deep navy text, teal accent */
+    --color-bg: #F4F6FB;
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #EEF2F8;
+    --color-surface-elevated: #FFFFFF;
+    --color-border: #D6DCE6;
+    --color-border-strong: #9AA4B5;
+    --color-text: #0F172A;
+    --color-text-muted: #475569;
+    --color-text-soft: #334155;
+
+    --color-accent: #0E7C7B;
+    --color-accent-hover: #0A5E5D;
+    --color-accent-soft: #D7EBEB;
+    --color-accent-fg: #FFFFFF;
+
+    --color-warn: #B45309;
+    --color-warn-soft: #FEF3C7;
+    --color-danger: #B91C1C;
+    --color-danger-soft: #FEE2E2;
+    --color-success: #15803D;
+    --color-success-soft: #DCFCE7;
+    --color-info: #1D4ED8;
+    --color-info-soft: #DBEAFE;
+
+    --color-focus: #1D4ED8;
+
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 10px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12), 0 4px 8px rgba(15, 23, 42, 0.06);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+
+    --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+    --transition-fast: 120ms ease;
+    --transition-med: 200ms ease;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #0B1220;
+      --color-surface: #131C2E;
+      --color-surface-alt: #182338;
+      --color-surface-elevated: #1B273D;
+      --color-border: #2A3852;
+      --color-border-strong: #4C5C7A;
+      --color-text: #F1F5FB;
+      --color-text-muted: #B5C0D2;
+      --color-text-soft: #D6DEEC;
+
+      --color-accent: #4FD1CF;
+      --color-accent-hover: #82E1DF;
+      --color-accent-soft: #133E3D;
+      --color-accent-fg: #062321;
+
+      --color-warn: #FCD34D;
+      --color-warn-soft: #3B2E0F;
+      --color-danger: #FCA5A5;
+      --color-danger-soft: #3A1414;
+      --color-success: #86EFAC;
+      --color-success-soft: #103D22;
+      --color-info: #93C5FD;
+      --color-info-soft: #112247;
+
+      --color-focus: #93C5FD;
+
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.55);
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    font-family: var(--font-stack);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-image:
+      radial-gradient(circle at 12% 8%, var(--color-accent-soft) 0%, transparent 32%),
+      radial-gradient(circle at 92% 6%, var(--color-info-soft) 0%, transparent 30%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: var(--space-2);
+    background: var(--color-text);
+    color: var(--color-bg);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 1000;
+  }
+  .skip-link:focus {
+    left: var(--space-3);
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Page shell */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-5) var(--space-4) var(--space-7);
+  }
+
+  /* Header */
+  .site-header {
+    margin-bottom: var(--space-5);
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin-bottom: var(--space-3);
+  }
+  .site-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 var(--space-2) 0;
+    letter-spacing: -0.01em;
+  }
+  .site-tagline {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  /* Section headings */
+  .section {
+    margin-top: var(--space-6);
+  }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 var(--space-2) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .section-sub {
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-4) 0;
+    font-size: 0.95rem;
+  }
+
+  /* Card grids */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  @media (min-width: 600px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 980px) {
+    .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Artifact group label */
+  .group-label {
+    grid-column: 1 / -1;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    padding: var(--space-2) 0 0 0;
+    border-top: 1px dashed var(--color-border);
+    margin-top: var(--space-3);
+  }
+  .group-label:first-child {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  /* Intro card */
+  .intro {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-md);
+  }
+  .intro-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--color-surface-alt);
+    color: var(--color-text-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid var(--color-border);
+  }
+  .chip-icon {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--color-accent);
+    display: inline-block;
+  }
+  .intro h2 {
+    margin: 0 0 var(--space-2) 0;
+    font-size: 1.3rem;
+  }
+  .intro p { margin: 0 0 var(--space-3) 0; }
+  .intro .role-frame {
+    background: var(--color-accent-soft);
+    color: var(--color-text);
+    border-left: 4px solid var(--color-accent);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-3);
+    font-size: 0.95rem;
+  }
+  .intro .role-frame strong { color: var(--color-accent-hover); }
+
+  /* Generic card button */
+  .card-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    min-height: 88px;
+    width: 100%;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), box-shadow var(--transition-med), border-color var(--transition-fast);
+    position: relative;
+  }
+  .card-btn:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-strong);
+    transform: translateY(-1px);
+  }
+  .card-btn:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .card-btn[aria-expanded="true"], .card-btn.is-active {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-accent-soft), var(--shadow-md);
+  }
+  .card-id {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-bottom: var(--space-2);
+    letter-spacing: 0.05em;
+  }
+  .card-label {
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+  .card-hint {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: auto;
+  }
+
+  /* Detail panel */
+  .detail-panel {
+    margin-top: var(--space-4);
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-md);
+    min-height: 140px;
+  }
+  .detail-panel:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .detail-empty {
+    color: var(--color-text-muted);
+    font-style: italic;
+    text-align: center;
+    padding: var(--space-5) 0;
+  }
+  .detail-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .detail-id {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-accent-fg);
+    background: var(--color-accent);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+  }
+  .detail-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    flex: 1 1 auto;
+  }
+  .detail-body { font-size: 0.96rem; }
+  .detail-body p { margin: 0 0 var(--space-3) 0; }
+  .detail-body p:last-child { margin-bottom: 0; }
+
+  /* Artifact-specific styling */
+  .doc-quote {
+    background: var(--color-surface-alt);
+    border-left: 3px solid var(--color-border-strong);
+    padding: var(--space-3) var(--space-4);
+    margin: var(--space-3) 0;
+    font-style: italic;
+    border-radius: var(--radius-sm);
+  }
+  .doc-quote .speaker {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-3) 0;
+    font-size: 0.92rem;
+  }
+  .data-table th, .data-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .data-table th {
+    background: var(--color-surface-alt);
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+  .data-table tr:last-child td { border-bottom: 0; }
+  .scratch {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    background: var(--color-surface-alt);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--color-border-strong);
+    white-space: pre-wrap;
+    margin: var(--space-3) 0;
+    line-height: 1.7;
+  }
+  .annotation {
+    font-size: 0.82rem;
+    color: var(--color-warn);
+    background: var(--color-warn-soft);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-weight: 600;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .meta-row span {
+    background: var(--color-surface-alt);
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  /* Questions */
+  .question-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-3);
+    box-shadow: var(--shadow-sm);
+  }
+  .question-card .qhead {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    margin-bottom: var(--space-2);
+  }
+  .question-card .qnum {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: var(--color-info-soft);
+    color: var(--color-info);
+    padding: 3px 9px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .question-card .qtext { font-weight: 600; line-height: 1.5; }
+  .question-card .qrefs {
+    margin-top: var(--space-2);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+  .question-card .qrefs strong { color: var(--color-text-soft); }
+
+  /* Differentials */
+  .diff-block {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-3);
+    box-shadow: var(--shadow-sm);
+  }
+  .diff-scenario {
+    font-weight: 600;
+    margin: 0 0 var(--space-3) 0;
+  }
+  .diff-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  @media (min-width: 600px) {
+    .diff-options { grid-template-columns: repeat(3, 1fr); }
+  }
+  .diff-btn {
+    text-align: left;
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.92rem;
+    min-height: 44px;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+  .diff-btn:hover {
+    border-color: var(--color-accent);
+    background: var(--color-surface);
+  }
+  .diff-btn:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .diff-btn.is-selected { border-color: var(--color-accent); background: var(--color-accent-soft); }
+  .diff-btn .opt-letter {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-right: 8px;
+  }
+  .diff-consequence {
+    margin-top: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    border-left: 4px solid var(--color-border-strong);
+    background: var(--color-surface-alt);
+  }
+  .diff-consequence[hidden] { display: none; }
+  .diff-consequence .verdict {
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .diff-consequence.is-good { background: var(--color-success-soft); border-left-color: var(--color-success); }
+  .diff-consequence.is-good .verdict { color: var(--color-success); }
+  .diff-consequence.is-bad { background: var(--color-danger-soft); border-left-color: var(--color-danger); }
+  .diff-consequence.is-bad .verdict { color: var(--color-danger); }
+  .diff-consequence.is-mixed { background: var(--color-warn-soft); border-left-color: var(--color-warn); }
+  .diff-consequence.is-mixed .verdict { color: var(--color-warn); }
+
+  /* Capstone */
+  .capstone {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-md);
+  }
+  .capstone[hidden] { display: none; }
+  .capstone h3 {
+    margin: 0 0 var(--space-3) 0;
+    font-size: 1.1rem;
+  }
+  .capstone .prompt {
+    background: var(--color-accent-soft);
+    border-left: 4px solid var(--color-accent);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-4);
+    font-size: 0.96rem;
+  }
+  .capstone label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+    font-size: 0.92rem;
+  }
+  .capstone textarea {
+    width: 100%;
+    min-height: 240px;
+    resize: vertical;
+    padding: var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+  .capstone textarea:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-color: var(--color-focus);
+  }
+  .word-count {
+    margin-top: var(--space-2);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .rubric {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+  .rubric h4 {
+    margin: 0 0 var(--space-2) 0;
+    font-size: 0.95rem;
+  }
+  .rubric ul {
+    margin: 0;
+    padding-left: var(--space-5);
+  }
+  .rubric li {
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+  }
+
+  /* Glossary */
+  .glossary {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-md);
+  }
+  .glossary[hidden] { display: none; }
+  .glossary-list {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  @media (min-width: 720px) {
+    .glossary-list { grid-template-columns: repeat(2, 1fr); }
+  }
+  .glossary-list dt {
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 2px;
+  }
+  .glossary-list dd {
+    margin: 0 0 var(--space-2) 0;
+    font-size: 0.92rem;
+    color: var(--color-text-soft);
+  }
+
+  /* Reveal buttons (for grouped reveal cards) */
+  .reveal-wrap {
+    text-align: center;
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+  }
+  .reveal-btn {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    border: 0;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    min-height: 44px;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+  }
+  .reveal-btn:hover { background: var(--color-accent-hover); transform: translateY(-1px); }
+  .reveal-btn:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .reveal-content[hidden] { display: none; }
+
+  /* Footer */
+  .site-footer {
+    margin-top: var(--space-7);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+  .site-footer p { margin: 0; }
+
+  /* Visually-hidden but available to screen readers */
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0);
+    white-space: nowrap; border: 0;
+  }
+
+  /* Motion sensitivity */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.001ms !important;
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+    }
+    .card-btn:hover { transform: none; }
+    .reveal-btn:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="page">
+
+  <header class="site-header">
+    <span class="eyebrow">Diagnostic Case Study · Math</span>
+    <h1 class="site-title">Why Can't Maya Calculate the Mean?</h1>
+    <p class="site-tagline">A 30-minute diagnostic investigation. You will examine evidence from a study session, identify what is going wrong, rule out one easy-to-miss alternative, and recommend a corrective step.</p>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================
+         SECTION 1: INTRO / OVERVIEW
+    ============================================= -->
+    <section class="section" aria-labelledby="intro-heading">
+      <h2 id="intro-heading" class="section-title"><span class="section-number">1</span> Overview</h2>
+      <p class="section-sub">Read the framing before opening the artifacts.</p>
+
+      <article class="intro">
+        <div class="intro-meta" aria-label="Case metadata">
+          <span class="chip"><span class="chip-icon" aria-hidden="true"></span> Discipline: Math (Intro Statistics)</span>
+          <span class="chip"><span class="chip-icon" aria-hidden="true"></span> Setting: Campus tutoring center</span>
+          <span class="chip"><span class="chip-icon" aria-hidden="true"></span> Time frame: One 20-minute session</span>
+          <span class="chip"><span class="chip-icon" aria-hidden="true"></span> Acuity: Time-sensitive (quiz in 1 hour)</span>
+        </div>
+        <h2>The situation</h2>
+        <p>It is 1:15 PM on a Tuesday. Maya, a first-semester student, walks into the campus tutoring center looking flustered. She has a short statistics quiz at 2:30 PM and the practice problems she just attempted are all wrong. The instructor has already given her the answer key, but she cannot match her work to it. Her notebook is open, her calculator is on, and she is convinced she "just isn't a math person."</p>
+        <p>You have access to her practice worksheet, her scratch work, two short notes from her instructor and tutor, and a brief transcript of what she said when she sat down. You have roughly 20 minutes before she has to leave for class.</p>
+
+        <div class="role-frame">
+          <strong>Your role.</strong> You are a peer math tutor on a diagnostic call. Your job is not to teach the whole topic from scratch — it is to figure out exactly <em>what</em> is breaking down in Maya's process, rule out one alternative explanation that looks similar, and recommend a single corrective step she can apply before her quiz.
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================
+         SECTION 2: ARTIFACTS
+    ============================================= -->
+    <section class="section" aria-labelledby="artifacts-heading">
+      <h2 id="artifacts-heading" class="section-title"><span class="section-number">2</span> Evidence</h2>
+      <p class="section-sub">Click any card to open it in the detail panel below. Cards are grouped into three evidence types.</p>
+
+      <div class="card-grid cols-3" id="artifact-grid">
+        <h3 class="group-label">The Student's Work</h3>
+        <button class="card-btn" type="button" data-artifact="A1">
+          <span class="card-id">A1</span>
+          <span class="card-label">Practice worksheet (problem 3)</span>
+          <span class="card-hint">The problem Maya is stuck on</span>
+        </button>
+        <button class="card-btn" type="button" data-artifact="A2">
+          <span class="card-id">A2</span>
+          <span class="card-label">Maya's scratch paper</span>
+          <span class="card-hint">Her actual handwritten calculation</span>
+        </button>
+        <button class="card-btn" type="button" data-artifact="A3">
+          <span class="card-id">A3</span>
+          <span class="card-label">Calculator screen photo</span>
+          <span class="card-hint">What she typed into her calculator</span>
+        </button>
+
+        <h3 class="group-label">Voices in the Case</h3>
+        <button class="card-btn" type="button" data-artifact="B1">
+          <span class="card-id">B1</span>
+          <span class="card-label">Maya's own words (transcript)</span>
+          <span class="card-hint">First 90 seconds of the session</span>
+        </button>
+        <button class="card-btn" type="button" data-artifact="B2">
+          <span class="card-id">B2</span>
+          <span class="card-label">Instructor's email note</span>
+          <span class="card-hint">What the teacher just emailed back</span>
+        </button>
+
+        <h3 class="group-label">Reference Material</h3>
+        <button class="card-btn" type="button" data-artifact="C1">
+          <span class="card-id">C1</span>
+          <span class="card-label">Answer key excerpt</span>
+          <span class="card-hint">The official correct answer</span>
+        </button>
+        <button class="card-btn" type="button" data-artifact="C2">
+          <span class="card-id">C2</span>
+          <span class="card-label">Textbook definition card</span>
+          <span class="card-hint">Definitions of mean, median, mode</span>
+        </button>
+      </div>
+
+      <div class="detail-panel" id="artifact-detail" tabindex="-1" aria-live="polite" aria-atomic="true">
+        <p class="detail-empty">Select an artifact card above to view its contents here.</p>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 3: ANALYSIS QUESTIONS
+    ============================================= -->
+    <section class="section" aria-labelledby="questions-heading">
+      <h2 id="questions-heading" class="section-title"><span class="section-number">3</span> Analysis Questions</h2>
+      <p class="section-sub">Work through the questions in order. Each one points to specific artifacts you should reread first.</p>
+
+      <div class="reveal-wrap" id="questions-wrap">
+        <button class="reveal-btn" type="button" data-reveal="questions-content">Show the 7 analysis questions</button>
+      </div>
+
+      <div class="reveal-content" id="questions-content" hidden>
+        <!-- Questions will be filled in via JS -->
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 4: DIFFERENTIAL
+    ============================================= -->
+    <section class="section" aria-labelledby="diff-heading">
+      <h2 id="diff-heading" class="section-title"><span class="section-number">4</span> Differential Decisions</h2>
+      <p class="section-sub">Three forks in the road. For each, pick the option you think a careful tutor would choose. The consequence reveals immediately below — use it to refine your thinking, not to "win."</p>
+
+      <div class="reveal-wrap" id="diff-wrap">
+        <button class="reveal-btn" type="button" data-reveal="diff-content">Show the 3 decision points</button>
+      </div>
+
+      <div class="reveal-content" id="diff-content" hidden>
+        <!-- Differentials populated via JS -->
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 5: CAPSTONE
+    ============================================= -->
+    <section class="section" aria-labelledby="cap-heading">
+      <h2 id="cap-heading" class="section-title"><span class="section-number">5</span> Capstone Assignment</h2>
+      <p class="section-sub">Pull everything together into a short decision memo.</p>
+
+      <div class="reveal-wrap" id="cap-wrap">
+        <button class="reveal-btn" type="button" data-reveal="cap-content">Show the capstone assignment</button>
+      </div>
+
+      <div class="reveal-content" id="cap-content" hidden>
+        <article class="capstone">
+          <h3>Decision memo: "What is going wrong, and what should Maya do in the next 30 minutes?"</h3>
+          <div class="prompt">
+            <p><strong>Audience:</strong> Maya herself, plus the math instructor (Prof. Chen) cc'd. <strong>Length:</strong> 200–300 words. <strong>Format:</strong> Three short paragraphs.</p>
+            <p>In paragraph 1, name the specific error you identified and cite the artifact IDs (e.g., A2, A3) that show it. In paragraph 2, name the alternative explanation you considered and ruled out, and say briefly why the evidence does not support it. In paragraph 3, give Maya one concrete corrective step she can apply to problems 4–6 before her 2:30 quiz.</p>
+          </div>
+          <label for="memo-text">Your decision memo</label>
+          <textarea id="memo-text" placeholder="Type your memo here. Aim for 200–300 words across three paragraphs."></textarea>
+          <p class="word-count" id="memo-wordcount" aria-live="polite">0 words</p>
+
+          <div class="rubric">
+            <h4>Grading rubric (10 points)</h4>
+            <ul>
+              <li><strong>Accuracy (3 pts):</strong> The error you name is actually present in the artifacts.</li>
+              <li><strong>Evidence (3 pts):</strong> You cite specific artifact IDs and quote or paraphrase the relevant detail.</li>
+              <li><strong>Differential reasoning (2 pts):</strong> You name a plausible alternative and explain why it is ruled out.</li>
+              <li><strong>Actionable recommendation (1 pt):</strong> Your corrective step is something Maya can do in 5 minutes, not a week-long study plan.</li>
+              <li><strong>Tone and clarity (1 pt):</strong> Respectful, plain language; no jargon dropped on Maya without a quick definition.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 6: GLOSSARY
+    ============================================= -->
+    <section class="section" aria-labelledby="gloss-heading">
+      <h2 id="gloss-heading" class="section-title"><span class="section-number">6</span> Glossary</h2>
+      <p class="section-sub">Key terms used in the case, with one-sentence definitions.</p>
+
+      <div class="reveal-wrap" id="gloss-wrap">
+        <button class="reveal-btn" type="button" data-reveal="gloss-content">Show the glossary</button>
+      </div>
+
+      <div class="reveal-content" id="gloss-content" hidden>
+        <article class="glossary">
+          <dl class="glossary-list">
+            <div>
+              <dt>Mean (arithmetic mean)</dt>
+              <dd>The sum of all values in a data set divided by the number of values; often called the "average."</dd>
+            </div>
+            <div>
+              <dt>Median</dt>
+              <dd>The middle value when a data set is arranged in order from smallest to largest; for an even-sized set, the average of the two middle values.</dd>
+            </div>
+            <div>
+              <dt>Mode</dt>
+              <dd>The value that appears most often in a data set; a set can have no mode, one mode, or several.</dd>
+            </div>
+            <div>
+              <dt>Data set</dt>
+              <dd>The collection of numerical values you are working with for a single problem.</dd>
+            </div>
+            <div>
+              <dt>Sum</dt>
+              <dd>The result of adding all values together.</dd>
+            </div>
+            <div>
+              <dt>Count (n)</dt>
+              <dd>How many individual values are in the data set; the divisor when calculating a mean.</dd>
+            </div>
+            <div>
+              <dt>Order of operations</dt>
+              <dd>The agreed-upon sequence (parentheses, exponents, multiplication and division, addition and subtraction) for evaluating a math expression.</dd>
+            </div>
+            <div>
+              <dt>Outlier</dt>
+              <dd>A value that sits far from the rest of the data and can pull the mean noticeably higher or lower.</dd>
+            </div>
+            <div>
+              <dt>Diagnostic question</dt>
+              <dd>A targeted question a tutor or teacher asks to figure out exactly where a student's reasoning is breaking down.</dd>
+            </div>
+            <div>
+              <dt>Procedural error</dt>
+              <dd>A mistake in the steps of a calculation (such as dividing by the wrong number), as opposed to a misunderstanding of the underlying concept.</dd>
+            </div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Diagnostic case study · Math · Brookdale Community College · 2026</p>
+  </footer>
+
+</div>
+
+<script>
+  // =====================================================
+  // DATA: ARTIFACTS
+  // =====================================================
+  const ARTIFACTS = {
+    A1: {
+      title: "Practice worksheet — Problem 3",
+      meta: ["MATH 115 Practice Set", "Worksheet 4", "Tue 1:15 PM"],
+      html: `
+        <p><strong>Problem 3.</strong> The following are the scores seven students earned on a short reading-comprehension quiz:</p>
+        <div class="scratch">8, 7, 9, 6, 10, 8, 7</div>
+        <p>Find <strong>the mean</strong> of the scores. Round to one decimal place if needed.</p>
+        <p style="font-size:0.88rem;color:var(--color-text-muted);">Maya has circled the word <em>mean</em> twice in pencil.</p>
+      `
+    },
+    A2: {
+      title: "Maya's scratch paper",
+      meta: ["Handwritten", "Pencil and pen", "Problem 3"],
+      html: `
+        <p>Reproduction of what Maya wrote in her notebook:</p>
+        <div class="scratch">8 + 7 + 9 + 6 + 10 + 8 + 7 = 55
+
+55 ÷ 6 = 9.166...
+
+Answer: 9.2</div>
+        <p>Below her work, in a different color of pen, she wrote:</p>
+        <div class="doc-quote">"Answer key says 7.9. Where did I mess up???"</div>
+        <span class="annotation">Note: the sum (55) is correct.</span>
+      `
+    },
+    A3: {
+      title: "Photo of Maya's calculator screen",
+      meta: ["TI-30 calculator", "Most recent entry"],
+      html: `
+        <p>The calculator display shows the following entry exactly as Maya typed it:</p>
+        <div class="scratch">8 + 7 + 9 + 6 + 10 + 8 + 7 ÷ 7 =
+       = 39</div>
+        <p>Maya did not write this 39 down on her scratch paper. She also has a separate division shown on a previous screen:</p>
+        <div class="scratch">55 ÷ 6 = 9.16666...</div>
+        <span class="annotation">Note: the calculator followed order of operations and divided 7 by 7 first.</span>
+      `
+    },
+    B1: {
+      title: "Transcript — first 90 seconds with Maya",
+      meta: ["Tutoring center", "1:16 PM Tue", "Audio recording, transcribed"],
+      html: `
+        <div class="doc-quote">
+          "I literally don't get it. I added everything up, I divided, and it's still wrong. I think I'm just not a math person — the answer key says 7.9 and I keep getting like 9 point something."
+          <span class="speaker">— Maya</span>
+        </div>
+        <div class="doc-quote">
+          "Walk me through it. How many scores are there?"
+          <span class="speaker">— You (tutor)</span>
+        </div>
+        <div class="doc-quote">
+          "Um… seven? No wait, six. I think six. I always forget if you count the zero, but there isn't a zero, so… six? I divided by six."
+          <span class="speaker">— Maya</span>
+        </div>
+        <span class="annotation">She is uncertain about the count of values.</span>
+      `
+    },
+    B2: {
+      title: "Email note from Prof. Chen (instructor)",
+      meta: ["From: chen@college.edu", "Subject: Re: Maya — practice set 4", "Sent 12:48 PM Tue"],
+      html: `
+        <div class="doc-quote">
+          "Maya — I looked at the photo of your work you sent. Your addition is fine. Before you redo it, count the numbers in the data set out loud, one by one, and write that count down BEFORE you divide. Also double-check what you typed into the calculator — order of operations matters when you string a long sum together."
+          <span class="speaker">— Prof. Chen</span>
+        </div>
+      `
+    },
+    C1: {
+      title: "Answer key excerpt (problems 3 & 4)",
+      meta: ["MATH 115 Practice Set", "Worksheet 4 — Answer Key"],
+      html: `
+        <table class="data-table" aria-label="Answer key for problems 3 and 4">
+          <thead>
+            <tr><th>Problem</th><th>Answer</th><th>Worked solution</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3</td>
+              <td><strong>7.9</strong></td>
+              <td>Sum = 55. Count = 7. Mean = 55 ÷ 7 = 7.857… ≈ 7.9</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>12.5</td>
+              <td>Sum = 75. Count = 6. Mean = 75 ÷ 6 = 12.5</td>
+            </tr>
+          </tbody>
+        </table>
+      `
+    },
+    C2: {
+      title: "Textbook definition card",
+      meta: ["Chapter 2: Describing Data", "Page 41", "Highlighted by Maya"],
+      html: `
+        <p><strong>Mean.</strong> The mean of a data set is found by <em>adding all the values together</em> and then <em>dividing by the number of values (n)</em>.</p>
+        <p><strong>Formula.</strong></p>
+        <div class="scratch">mean  =  (sum of all values)  ÷  n
+
+where n = how many values are in the set</div>
+        <p><strong>Common mistakes.</strong></p>
+        <ul>
+          <li>Forgetting to count <em>every</em> value, including repeats. If the number 8 appears twice, it counts twice.</li>
+          <li>Dividing by the largest value instead of by n.</li>
+          <li>Letting the calculator do the order of operations without using parentheses around the sum.</li>
+        </ul>
+      `
+    }
+  };
+
+  // =====================================================
+  // DATA: QUESTIONS
+  // =====================================================
+  const QUESTIONS = [
+    {
+      id: "Q1",
+      text: "Restate the problem Maya is trying to solve, in your own words, in one sentence.",
+      refs: ["A1"]
+    },
+    {
+      id: "Q2",
+      text: "Compare Maya's scratch work to the answer key. The sum she got is correct — so where, specifically, does her answer diverge from the key?",
+      refs: ["A2", "C1"]
+    },
+    {
+      id: "Q3",
+      text: "Look at Maya's transcript. What does she say about how many numbers are in the data set, and what does that tell you about her understanding of n?",
+      refs: ["B1"]
+    },
+    {
+      id: "Q4",
+      text: "There is a second piece of evidence — the calculator photo — that could mislead a tutor into diagnosing a different error. What does the calculator screen show, and why is it NOT the main cause of Maya's wrong answer?",
+      refs: ["A3", "A2"]
+    },
+    {
+      id: "Q5",
+      text: "Re-read the textbook definition card. Which of the listed 'common mistakes' best matches Maya's actual error?",
+      refs: ["C2", "A2"]
+    },
+    {
+      id: "Q6",
+      text: "Prof. Chen's email gives Maya a very specific instruction before she redoes the problem. What is it, and why is that instruction targeted at the exact error you identified?",
+      refs: ["B2"]
+    },
+    {
+      id: "Q7",
+      text: "In one sentence, state your diagnostic conclusion: what is the single most important thing going wrong for Maya right now, and what is the one thing she should change before her 2:30 quiz?",
+      refs: ["A2", "B1", "B2", "C2"]
+    }
+  ];
+
+  // =====================================================
+  // DATA: DIFFERENTIALS
+  // =====================================================
+  const DIFFERENTIALS = [
+    {
+      id: "D1",
+      scenario: "You have about 20 minutes with Maya. She is anxious. What do you tackle FIRST?",
+      options: [
+        {
+          letter: "A",
+          text: "Re-teach the full definition of mean, median, and mode from the textbook card (C2).",
+          verdict: "mixed",
+          label: "Partly defensible",
+          consequence: "Reviewing definitions is reasonable, but you only have 20 minutes and Maya already has the definition highlighted. Spending most of that time on definitions means she may walk into the quiz still making the same divisor error. This is not the strongest first move."
+        },
+        {
+          letter: "B",
+          text: "Ask her to count the numbers in problem 3 out loud, one at a time, touching each one — then redo the division.",
+          verdict: "good",
+          label: "Best first move",
+          consequence: "This isolates the exact step where her process breaks down (the count of n). It is fast, it is concrete, and it matches Prof. Chen's instruction in B2. If she lands on n=7 and gets 7.9, the diagnosis is confirmed in under three minutes."
+        },
+        {
+          letter: "C",
+          text: "Fix the calculator entry shown in A3 by teaching her to use parentheses around the sum.",
+          verdict: "bad",
+          label: "Off-target",
+          consequence: "The calculator order-of-operations error is real (worth addressing later), but it is not the error that produced her wrong answer on this problem — her scratch paper shows a separate, by-hand division of 55÷6. Leading with this fixes a different problem and leaves the actual error in place."
+        }
+      ]
+    },
+    {
+      id: "D2",
+      scenario: "Maya redoes problem 3 and gets 7.9. She says, 'OK but what if the next problem has different numbers? How do I know if I'm doing it right?' How do you respond?",
+      options: [
+        {
+          letter: "A",
+          text: "Tell her to just trust her addition and move on — she got this one right, so she's fine.",
+          verdict: "bad",
+          label: "Skips the learning",
+          consequence: "She got the right answer, but if she does not understand why the count was the issue, she will repeat the mistake the moment a data set has more repeats. 'Just trust it' bypasses the diagnostic moment."
+        },
+        {
+          letter: "B",
+          text: "Give her a checklist: (1) write down all values, (2) count them out loud, (3) write n, (4) sum, (5) divide.",
+          verdict: "good",
+          label: "Generalizes the fix",
+          consequence: "A short procedural checklist directly addresses the procedural error. It externalizes the counting step, which is exactly where her process breaks. It is also short enough to use under quiz pressure."
+        },
+        {
+          letter: "C",
+          text: "Open the textbook to the section on outliers and explain how outliers affect the mean.",
+          verdict: "mixed",
+          label: "Right topic, wrong moment",
+          consequence: "Outliers are a real and interesting topic, and the 10 in her data set could lead to a future conversation. But it is unrelated to her actual error and will eat her remaining time before the quiz."
+        }
+      ]
+    },
+    {
+      id: "D3",
+      scenario: "You have 5 minutes left. What is the most useful thing to leave Maya with?",
+      options: [
+        {
+          letter: "A",
+          text: "Write the checklist from D2 on a sticky note she can put on her quiz desk.",
+          verdict: "good",
+          label: "Most useful",
+          consequence: "A physical, visible checklist is the strongest defense against a procedural error under pressure. It also signals to Maya that the issue is fixable and procedural — not a sign that she 'isn't a math person.'"
+        },
+        {
+          letter: "B",
+          text: "Walk her through problems 4–8 quickly so she has seen each one before the quiz.",
+          verdict: "mixed",
+          label: "Tempting but shallow",
+          consequence: "Pre-walking problems can build short-term confidence, but if she still does not have the procedural fix internalized, she will reproduce the same error on the quiz with new numbers."
+        },
+        {
+          letter: "C",
+          text: "Reassure her that 'everyone struggles with math' and send her off.",
+          verdict: "bad",
+          label: "Empty reassurance",
+          consequence: "Kindness matters, but reassurance without a tool to take into the quiz leaves Maya in the same position she walked in with. The diagnostic finding (count n explicitly) is the actual gift to give her."
+        }
+      ]
+    }
+  ];
+
+  // =====================================================
+  // RENDERING
+  // =====================================================
+
+  // Artifact panel
+  const detailPanel = document.getElementById('artifact-detail');
+  const artifactButtons = document.querySelectorAll('.card-btn[data-artifact]');
+
+  function renderArtifact(id) {
+    const data = ARTIFACTS[id];
+    if (!data) return;
+    const metaHtml = data.meta && data.meta.length
+      ? `<div class="meta-row">${data.meta.map(m => `<span>${escapeHtml(m)}</span>`).join('')}</div>`
+      : '';
+    detailPanel.innerHTML = `
+      <div class="detail-header">
+        <span class="detail-id">${escapeHtml(id)}</span>
+        <h3 class="detail-title">${escapeHtml(data.title)}</h3>
+      </div>
+      <div class="detail-body">
+        ${metaHtml}
+        ${data.html}
+      </div>
+    `;
+    // Update active state on cards
+    artifactButtons.forEach(btn => {
+      const active = btn.getAttribute('data-artifact') === id;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-expanded', active ? 'true' : 'false');
+    });
+    // Move focus to the panel so screen readers announce the change
+    detailPanel.focus();
+  }
+
+  artifactButtons.forEach(btn => {
+    btn.setAttribute('aria-controls', 'artifact-detail');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-artifact');
+      renderArtifact(id);
+    });
+  });
+
+  // Questions
+  const questionsContent = document.getElementById('questions-content');
+  function renderQuestions() {
+    questionsContent.innerHTML = QUESTIONS.map((q) => {
+      const refsHtml = q.refs.map(r => `<strong>${escapeHtml(r)}</strong>`).join(', ');
+      return `
+        <article class="question-card">
+          <div class="qhead">
+            <span class="qnum">${escapeHtml(q.id)}</span>
+            <div class="qtext">${escapeHtml(q.text)}</div>
+          </div>
+          <p class="qrefs">Reread first: ${refsHtml}</p>
+        </article>
+      `;
+    }).join('');
+  }
+
+  // Differentials
+  const diffContent = document.getElementById('diff-content');
+  function renderDifferentials() {
+    diffContent.innerHTML = DIFFERENTIALS.map((d, idx) => {
+      const consequenceId = `${d.id.toLowerCase()}-consequence`;
+      const optsHtml = d.options.map(opt => `
+        <button class="diff-btn" type="button"
+          data-diff="${d.id}"
+          data-letter="${opt.letter}"
+          aria-controls="${consequenceId}">
+          <span class="opt-letter">${opt.letter}.</span>${escapeHtml(opt.text)}
+        </button>
+      `).join('');
+      return `
+        <article class="diff-block" aria-labelledby="${d.id}-heading">
+          <p class="diff-scenario" id="${d.id}-heading"><strong>Decision ${idx + 1}.</strong> ${escapeHtml(d.scenario)}</p>
+          <div class="diff-options" role="group" aria-label="Decision options">${optsHtml}</div>
+          <div class="diff-consequence" id="${consequenceId}" hidden aria-live="polite">
+            <span class="verdict"></span>
+            <span class="consequence-text"></span>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    diffContent.querySelectorAll('.diff-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const diffId = btn.getAttribute('data-diff');
+        const letter = btn.getAttribute('data-letter');
+        const diff = DIFFERENTIALS.find(x => x.id === diffId);
+        if (!diff) return;
+        const opt = diff.options.find(o => o.letter === letter);
+        if (!opt) return;
+
+        // Visually mark which option is selected (in this differential block only)
+        const parentBlock = btn.closest('.diff-block');
+        parentBlock.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+
+        // Render consequence
+        const consequence = parentBlock.querySelector('.diff-consequence');
+        consequence.classList.remove('is-good', 'is-bad', 'is-mixed');
+        consequence.classList.add('is-' + opt.verdict);
+        consequence.querySelector('.verdict').textContent = `Option ${letter} — ${opt.label}`;
+        consequence.querySelector('.consequence-text').textContent = opt.consequence;
+        consequence.removeAttribute('hidden');
+      });
+    });
+  }
+
+  // Reveal buttons (questions, diff, capstone, glossary)
+  document.querySelectorAll('.reveal-btn[data-reveal]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-reveal');
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      target.removeAttribute('hidden');
+      // Hide the wrapper button
+      const wrap = btn.closest('.reveal-wrap');
+      if (wrap) wrap.style.display = 'none';
+
+      // Lazy render specific sections
+      if (targetId === 'questions-content' && !target.dataset.rendered) {
+        renderQuestions();
+        target.dataset.rendered = 'true';
+      } else if (targetId === 'diff-content' && !target.dataset.rendered) {
+        renderDifferentials();
+        target.dataset.rendered = 'true';
+      }
+    });
+  });
+
+  // Capstone word counter
+  const memoText = document.getElementById('memo-text');
+  const memoCount = document.getElementById('memo-wordcount');
+  if (memoText && memoCount) {
+    memoText.addEventListener('input', () => {
+      const t = memoText.value.trim();
+      const words = t.length === 0 ? 0 : t.split(/\s+/).length;
+      memoCount.textContent = words === 1 ? '1 word' : `${words} words`;
+    });
+
+    // Try to restore saved draft
+    try {
+      const saved = localStorage.getItem('math-mean-case-memo-v1');
+      if (saved) {
+        memoText.value = saved;
+        const w = saved.trim().length === 0 ? 0 : saved.trim().split(/\s+/).length;
+        memoCount.textContent = w === 1 ? '1 word' : `${w} words`;
+      }
+    } catch (e) { /* ignore */ }
+
+    // Auto-save (debounced)
+    let saveTimer = null;
+    memoText.addEventListener('input', () => {
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        try {
+          localStorage.setItem('math-mean-case-memo-v1', memoText.value);
+        } catch (e) { /* ignore */ }
+      }, 400);
+    });
+  }
+
+  // Utility: HTML-escape user-facing strings (defensive — content is hard-coded but this keeps the renderer safe).
+  function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+</script>
+</body>
+</html>
